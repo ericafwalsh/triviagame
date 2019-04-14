@@ -1,0 +1,31 @@
+body {
+    background-image: url("../images/88891.jpg");
+}
+
+h1 {
+    font-family: 'Junge', serif;
+    padding: 40px;
+    font-size: 60px;
+}
+
+#background {
+    background-color: #EEE8AA;
+    width: 70%;
+    margin: auto;
+    padding: auto;
+    text-align: center;
+    height: 500px;
+}
+
+#gameDiv {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 24px;
+}
+
+#start {
+    background-color: lavender;
+    border: 2px solid darkorchid;
+    padding: 5px 40px 5px 40px;
+    text-align: center;
+    font-size: 16px;
+}
