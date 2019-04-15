@@ -1,37 +1,38 @@
 
-var questions = {
-    Q1: {
+var questions = [
+    {
         question: "What animal has the highest blood pressure?",
-        wrongAnswers: ["blue whale","elephant","flea"],
-        rightAnswer: "giraffe",
-        image: "../images/Q1.jpg"
+        options: ["blue whale","elephant","flea","giraffe"],
+        image: "../triviagame/assets/images/Q1.jpg",
+        correctAnswer: "giraffe"
     },
-    Q2: {
+    {
         question: "What is the only mammal capable of true flight?",
-        wrongAnswers: ["flying squirrel","ocelot","hummingbird"],
-        rightAnswer: "bat",
-        image: "../images/Q2.jpg"
+        options: ["flying squirrel","ocelot","hummingbird","bat"],
+        image: "../triviagame/assets/images/Q2.jpg",
+        correctAnswer: "bat"
     },
-    Q3: {
+    {
         question: "What is the fastest flying bird in the world?",
-        wrongAnswers: ["harpy eagle","horned sungem","spine-tailed swift"],
-        rightAnswer: "peregrine falcon",
-        image: "../images/Q3.jpg"
+        options: ["harpy eagle","horned sungem","spine-tailed swift","peregrine falcon"],
+        image: "../triviagame/assets/images/Q13jpg",
+        correctAnswer: "peregrine falcon"
     },
-    Q4: {
+    {
         question: "What is the largest of the great apes?",
-        wrongAnswers: ["orangutan","western lowland gorilla","eastern lowland gorilla"],
-        rightAnswer: "mountain gorilla",
-        image: "../images/Q4.jpg"
+        options: ["orangutan","western lowland gorilla","eastern lowland gorilla", "mountain gorilla"],
+        image: "../triviagame/assets/images/Q4.jpg",
+        correctAnswer: "mountain gorilla"
     },
-    Q5: {
+    {
         question: "What is the world's most poisonous spider?",
-        wrongAnswers: ["brown recluse","sydney funnel spider","daddy-longlegs"],
-        rightAnswer: "brazilian wandering spider",
-        image: "../images/Q5.jpg"
+        options: ["brown recluse","sydney funnel spider","daddy-longlegs","brazilian wandering spider"],
+        image: "../triviagame/assets/images/Q5.jpg",
+        correctAnswer: "brazilian wandering spider"
     }
-};      
+];      
 
+var correctAnswers = ["giraffe","bat","peregrine falcon","mountain gorilla","brazilian wandering spider"];
 
 var countdown;
 var count = 0;
@@ -39,7 +40,7 @@ var questionsCorrect = 0;
 var questionsIncorrect = 0;
 var unansweredQuestions = 0;
 
-// Variable showImage will hold the setInterval when we start the slideshow
+// Variables that hold the interval timers
 var resetCountdownTimer;
 var resetTransition;
 
@@ -48,7 +49,6 @@ $(document).ready(function() {
 
     $(".list").hide();
 
-    // $("#list").hide();
     $("#start").click(startGame);
 
 
@@ -64,6 +64,8 @@ $(document).ready(function() {
 
     function nextQuestion() {
         $(".list").show();
+        $("#line2").hide();
+        $("#answerPic").hide();
 
         countdown = 31;
 
@@ -75,16 +77,22 @@ $(document).ready(function() {
         clearInterval(resetTransition);
 
         // Show the question
-        $("#line1").html(questions.Q1.question);
+        $("#line1").html(questions[count].question);
        
         // Give the buttons names of the answers, and add them as attributes
-        $("#answer1").html(questions.Q1.rightAnswer);
-        $("#answer2").html(questions.Q1.wrongAnswers[0]);
-        $("#answer3").html(questions.Q1.wrongAnswers[1]);
-        $("#answer4").html(questions.Q1.wrongAnswers[2]);
 
-    };
+        for (i=1;i<5;i++) {
+            $("#answer" + [i]).html(questions[count].options[i-1]);
+        };
+            // $("#answer1").html(questions[count].options[0]);
+            // $("#answer2").html(questions[count].options[1]);
+            // $("#answer3").html(questions[count].options[2]);
+            // $("#answer4").html(questions[count].options[3]);
+    }
 
+
+    // CrystalImage.attr("src", "../unit-4-game/assets/images/crystal" + i.toString() + ".png");
+    
     // counts down, and flags when the user did not pick an answer
     function countdownTimer() {
 
@@ -111,7 +119,7 @@ $(document).ready(function() {
 
         transitionScreen(answerChosen);
     
-        resetTransition = setInterval(nextQuestion, 10000);
+        resetTransition = setInterval(nextQuestion, 4000);
     });
 
 
@@ -123,25 +131,27 @@ $(document).ready(function() {
 
         // hide buttons
         $(".list").hide();
+        $("#line2").show();
+        $("#answerPic").show();
         
         count++;
       
-        $("#answerPic").html("<img src=" + questions.Q1.image); 
+        $("#answerPic").html("<img src=" + questions[count].image + ">"); 
         
         
-        if (answerChosen === questions.Q1.rightAnswer) {
+        if (correctAnswers.includes(answerChosen)) {
             questionsCorrect++;
-            $("#line1").html("<h2>Correct!</h2>");
+            $("#line1").html("<h3>Correct!</h3>");
         }
         else if (countdown === 0) {
             unansweredQuestions++;
-            $("#line1").html("<h2>You ran out of time</h2>");
-            $("#line2").html("<h2>The correct answer was: " + questions.Q1.rightAnswer + "</h2>");
+            $("#line1").html("<h3>You ran out of time!</h3>");
+            $("#line2").html("<h3>The correct answer was: " + questions[count].correctAnswer + "</h3>");
         }
         else {
             questionsIncorrect++;
-            $("#line1").html("<h2>Nope!</h2>");
-            $("#line2").html("<h2>The correct answer was: " + questions.Q1.rightAnswer + "</h2>");
+            $("#line1").html("<h3>Nope!</h3>");
+            $("#line2").html("<h3>The correct answer was: " + questions[count].correctAnswer + "</h3>");
         }
 
         if (count === 5) {
@@ -149,17 +159,19 @@ $(document).ready(function() {
         }
     };
 
+
+    // this needs work
     function endScreen(){
         $("#line1").html("<h2>All done, here's how you did!</h2>");
-        $("#answer1").html("Correct Answers: " + questionsCorrect);
-        $("#answer2").html("Incorrect Answers: " + questionsIncorrect);
-        $("#answer3").html("Unanswered: " + unansweredQuestions);
-        $("#answer4").html("Start Over?").click(resetGame);
+        $("#line2").hide();
+        $("#answerPic").hide();
+
+        $("#gameDiv").html("<p>Correct Answers: " + questionsCorrect + "</p>");
+        $("#gameDiv").html("<p>Incorrect Answers: " + questionsIncorrect + "</p>");
+        $("#gameDiv").html("<p>Unanswered: " + unansweredQuestions + "</p>");
+
+        $("#start").click(startGame);
+        // Need to change text here
     };
-
-    // function resetGame() {
-
-
-    // };
 
 });
