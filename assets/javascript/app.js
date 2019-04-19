@@ -74,19 +74,19 @@ $(document).ready(function() {
         // Set and reset the countdown to 30
         countdown = 30;
 
+        // Show the countdown
         $("#countdown").html("Time Remaining: " + countdown + " Seconds");
 
-        // Clear the resetTransition interval. 
-        // *This only applies on questions 2+
+        // Clear the resetTransition interval. *This only applies on questions 2+
         clearInterval(resetTransition);
 
         // Call the countdownTimer function every second
         resetCountdownTimer = setInterval(countdownTimer, 1000);
 
-        // Show the question
+        // Print the question
         $("#line1").html(questions[count].question);
 
-        // Show the options
+        // Print the options
         for (i=1;i<5;i++) {
             $("#answer" + [i]).html(questions[count].options[i-1]);
         };
