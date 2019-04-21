@@ -51,12 +51,13 @@ $(document).ready(function() {
     // Hide the buttons
     $(".answer").hide();
 
-    // When the start button is clicked, call startGame function
+    // When the start button is clicked, call nextQuestion function
     $("#start").click(nextQuestion);
 
 
     function nextQuestion() {
 
+        // This resets the game if the question count has reached 5
         if (count === 5) {
             count = 0;
             questionsCorrect = 0;
@@ -68,13 +69,13 @@ $(document).ready(function() {
         // hides the start button, line 2, and pic
         $("#start, #line 1, #line2, #answerPic").hide();
 
-        // shows the buttons
+        // shows the buttons and countdown
         $(".answer, #countdown").show();
 
         // Set and reset the countdown to 30
         countdown = 30;
 
-        // Show the countdown
+        // Print the countdown clock
         $("#countdown").html("Time Remaining: " + countdown + " Seconds");
 
         // Clear the resetTransition interval. *This only applies on questions 2+
@@ -120,7 +121,7 @@ $(document).ready(function() {
 
     function transitionScreen(answerChosen) {
 
-        // clear the countdown timer interval
+        // clear the countdown timer 
         clearInterval(resetCountdownTimer);
 
         // hide buttons and show the line2 and picture
@@ -130,7 +131,7 @@ $(document).ready(function() {
         // display the image for the current question
         $("#answerPic").html("<img src=" + questions[count].image + ">"); 
         
-        
+        // determines if the answer is correct, prints the corresponding text, and increments the score variables accordingly
         if (correctAnswers.includes(answerChosen)) {
             questionsCorrect++;
             $("#line1").html("<h3>Correct!</h3>");
@@ -173,8 +174,6 @@ $(document).ready(function() {
         var text2 = $("<p></p>").text("Incorrect Answers: " + questionsIncorrect);
         var text3 = $("<p></p>").text("Unanswered: " + unansweredQuestions);
         $("#results").append(text1,text2,text3);
-
-        // $("#gameDiv").append($('<button id="startover"><h2>Start Over?</h2></button>');
 
         clearInterval(endScreenTimer);
 
